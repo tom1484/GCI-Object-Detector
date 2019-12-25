@@ -12,3 +12,11 @@ You can download the model [here](http://download.tensorflow.org/models/object_d
 The model takes an image as input which is **300 x 300** pixels with three channels per pixel. As the model is **quantized**, each value is a between **0** and **255**.
 
 ### Output
+The output contains **class**, **score** and **location**.
+#### score (confidence)
+Score, which can also be called as confidence, shows how sure about the result the model is.
+#### location
+Location indicates which box the object is inside and is represented by four values:
+<p align="center">[   top,    left,    bottom,    right   ]</p>
+you can assume that they are equals to :
+<p align="center">[   x1,    y1,    x2,    y2   ]</p>
