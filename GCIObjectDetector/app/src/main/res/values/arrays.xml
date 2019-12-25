@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="colors">
+        <item name="Red">#FFFF0000</item>
+        <item name="Blue">#FF0000FF</item>
+        <item name="DarkOrange">#FFFF8C00</item>
+        <item name="Yellow">#FFFFFF00</item>
+        <item name="Green">#FF008000</item>
+        <item name="Maroon">#FF800000</item>
+        <item name="LightSkyBlue">#FF87CEFA</item>
+        <item name="MediumVioletRed">#FFC71585</item>
+        <item name="Chartreuse">#FF7FFF00</item>
+        <item name="SteelBlue">#FF4682B4</item>
+    </array>
+
+    <string-array name="colorNames">
+        <item>Red</item>
+        <item>Blue</item>
+        <item>DarkOrange</item>
+        <item>Yellow</item>
+        <item>Green</item>
+        <item>Maroon</item>
+        <item>LightSkyBlue</item>
+        <item>MediumVioletRed</item>
+        <item>Chartreuse</item>
+        <item>SteelBlue</item>
+    </string-array>
+
+</resources>
