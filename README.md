@@ -20,3 +20,4 @@ Location indicates which box the object is inside and is represented by four val
 <p align="center"><strong>[   top,    left,    bottom,    right   ]</strong></p>
 you can assume that they are equals to :
 <p align="center"><strong>[   x1,    y1,    x2,    y2   ]</strong></p>
+<p align="center"><img src="src/img/boundingbox.png" align="middle" width="300"></p>
