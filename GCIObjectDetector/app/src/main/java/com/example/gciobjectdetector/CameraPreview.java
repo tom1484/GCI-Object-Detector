@@ -286,7 +286,6 @@ public class CameraPreview extends TextureView {
             Range<Integer> result = null;
             for (Range<Integer> range : ranges) {
                 int upper = range.getUpper();
-                // 10 - min range upper for my needs
                 if (upper >= 10) {
                     if (result == null || upper < result.getUpper().intValue()) {
                         result = range;
