@@ -1,6 +1,9 @@
 # GCI-Object-Detector
 An Object Dtection App using TFLite for Google Code-in
 
+## Project Explain
+
+
 ## Model
  model name | input shape | quantized | model size |
 |:-:|:-:|:-:|:-:|
