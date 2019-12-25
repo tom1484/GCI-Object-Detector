@@ -17,6 +17,6 @@ The output contains **class**, **score** and **location**.
 Score, which can also be called as confidence, shows how sure about the result the model is.
 #### location
 Location indicates which box the object is inside and is represented by four values:
-<p align="center">[   top,    left,    bottom,    right   ]</p>
+<p align="center"><strong>[   top,    left,    bottom,    right   ]</strong></p>
 you can assume that they are equals to :
-<p align="center">[   x1,    y1,    x2,    y2   ]</p>
+<p align="center"><strong>[   x1,    y1,    x2,    y2   ]</strong></p>
