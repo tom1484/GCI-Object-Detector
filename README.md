@@ -2,6 +2,7 @@
 An Object Dtection App using TFLite for Google Code-in
 
 ## Project Explain
+<p align="center"><img src="src/img/structure.png" align="middle" width="300"></p>
 
 
 ## Model
@@ -15,11 +16,11 @@ You can download the model [here](http://download.tensorflow.org/models/object_d
 The model takes an image as input which is **300 x 300** pixels with three channels per pixel. As the model is **quantized**, each value is a between **0** and **255**.
 
 ### Output
+<p align="center"><img src="src/img/boundingbox.png" align="middle" width="300"></p>
 The output contains **class**, **score** and **location**.
 #### score (confidence)
 Score, which can also be called as confidence, shows how sure about the result the model is.
 #### location
-<p align="center"><img src="src/img/boundingbox.png" align="middle" width="300"></p>
 Location indicates which box the object is inside and is represented by four values:
 <p align="center"><strong>[   top,    left,    bottom,    right   ]</strong></p>
 you can assume that they are equals to :
