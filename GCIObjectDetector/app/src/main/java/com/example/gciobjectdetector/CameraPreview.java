@@ -19,6 +19,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.Range;
 import android.util.Size;
 import android.view.Surface;
 import android.view.TextureView;
@@ -243,6 +244,9 @@ public class CameraPreview extends TextureView {
                             try {
                                 mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE,
                                         CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
+                                Log.i("TAG", getRange().toString());
+                                mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE,
+                                        getRange());
                                 mPreviewRequest = mPreviewRequestBuilder.build();
                                 mCaptureSession.setRepeatingRequest(mPreviewRequest, mCaptureCallback, mBackgroundHandler);
                             } catch (CameraAccessException e) {
@@ -272,4 +276,30 @@ public class CameraPreview extends TextureView {
         public void onImageAvailable(ImageReader reader) {
         }
     };
+
+    private Range<Integer> getRange() {
+        CameraCharacteristics chars = null;
+        try {
+            CameraManager manager = (CameraManager) getContext().getSystemService(Context.CAMERA_SERVICE);
+            chars = manager.getCameraCharacteristics(mCameraId);
+            Range<Integer>[] ranges = chars.get(CameraCharacteristics.CONTROL_AE_AVAILABLE_TARGET_FPS_RANGES);
+            Range<Integer> result = null;
+            for (Range<Integer> range : ranges) {
+                int upper = range.getUpper();
+                // 10 - min range upper for my needs
+                if (upper >= 10) {
+                    if (result == null || upper < result.getUpper().intValue()) {
+                        result = range;
+                    }
+                }
+            }
+            if (result == null) {
+                result = ranges[0];
+            }
+            return result;
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
