@@ -5,16 +5,26 @@ An Object Dtection App using TFLite for Google Code-in
 
 <p align="center"><img src="src/img/structure.png" align="middle" width="300"></p>
 
-#### MainActivity
-Where things are declared and started.
-#### CameraPreview
-This manages the preview of camera and passes it to the detector.
-#### ObjectDetector
-Receives frames from the preview and run TFLite model. Finally, pass all recognitions to the processor.
-#### ObjectProcessor
+* **MainActivity**
 
-#### Recognition
+  * Where things are declared and started.
+  
+* **CameraPreview**
 
+  * This manages the preview of camera and passes it to the detector.
+  
+* **ObjectDetector**
+
+  * Receives frames from the preview and run the TFLite model. Finally, pass all recognitions to the processor.
+  
+* **ObjectProcessor**
+
+  * the recognitions from the detector on the screen.
+  
+* **Recognition**
+
+  * the informations of a recognition.
+  
 
 ## Model
 
