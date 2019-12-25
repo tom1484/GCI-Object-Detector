@@ -1,7 +1,7 @@
 # GCI-Object-Detector
 An Object Dtection App using TFLite for Google Code-in
 
-## Project Files Explaination
+## Project Files
 
 <p align="center"><img src="src/img/structure.png" align="middle" width="300"></p>
 
