@@ -16,6 +16,7 @@ The output contains **class**, **score** and **location**.
 #### score (confidence)
 Score, which can also be called as confidence, shows how sure about the result the model is.
 #### location
+<p align="center"><img src="src/img/boundingbox.png" align="middle" width="300"></p>
 Location indicates which box the object is inside and is represented by four values:
 <p align="center"><strong>[   top,    left,    bottom,    right   ]</strong></p>
 you can assume that they are equals to :
