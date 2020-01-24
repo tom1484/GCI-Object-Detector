@@ -39,16 +39,19 @@ public class ObjectProcessor {
             colors[i] = typedArray.getColor(i, 0);
         }
 
+        // recognition box
         boxPaint = new Paint();
         boxPaint.setStyle(Paint.Style.STROKE);
         boxPaint.setColor(Color.RED);
         boxPaint.setStrokeWidth(5);
 
+        // text box
         textBoxPaint = new Paint();
         textBoxPaint.setColor(Color.RED);
         textBoxPaint.setAlpha(128);
         textBoxPaint.setStyle(Paint.Style.FILL);
 
+        // text
         textPaint = new Paint();
         textPaint.setColor(Color.WHITE);
         textPaint.setStyle(Paint.Style.FILL);
@@ -63,6 +66,7 @@ public class ObjectProcessor {
 
     public void process(List<Recognition> recognitions, Matrix cropToFrameTransform) {
 
+    	// use canvas to draw recognition on preview
         Bitmap boxes = Bitmap.createBitmap(previewSize.getWidth(), previewSize.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(boxes);
 
@@ -75,12 +79,13 @@ public class ObjectProcessor {
                 RectF location = new RectF(rec.getLocation());
                 cropToFrameTransform.mapRect(location);
 
+                // draw recognition box
                 float boxWidth = location.right - location.left;
                 float boxHeight = location.bottom - location.top;
                 float r = boxHeight * 0.1f;
-//                boxPaint.setColor(colors[rec.getId()]);
                 canvas.drawRoundRect(location, r, r, boxPaint);
 
+                // calculate text width for text box
                 float textWidth = 10f;
                 float[] widths = new float[information.length()];
                 textPaint.getTextWidths(information, widths);
@@ -89,7 +94,7 @@ public class ObjectProcessor {
                 }
                 float textHeight = textPaint.getTextSize();
 
-//                textBoxPaint.setColor(colors[rec.getId()]);
+                // draw text box
                 canvas.drawRect(
                         location.centerX() - textWidth / 2,
                         location.top,
@@ -97,6 +102,7 @@ public class ObjectProcessor {
                         location.top + textHeight,
                         textBoxPaint);
 
+                // draw text
                 canvas.drawText(information, location.centerX(), location.top + textHeight, textPaint);
             }
         }

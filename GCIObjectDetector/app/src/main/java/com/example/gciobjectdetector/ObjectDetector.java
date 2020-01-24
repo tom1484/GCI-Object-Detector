@@ -69,6 +69,7 @@ public class ObjectDetector {
         this.previewSize = previewSize;
         assetManager = context.getAssets();
 
+        // load labels
         InputStream labelsInput = null;
         labelsInput = assetManager.open(labelFilename);
         BufferedReader br = null;
@@ -79,12 +80,14 @@ public class ObjectDetector {
         }
         br.close();
 
+        // create interpreter
         try {
             tfLite = new Interpreter(loadModelFile(assetManager, modelFilename));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
+        // create buffer for frame data
         isModelQuantized = true;
         int numBytesPerChannel;
         if (isModelQuantized) {
@@ -94,8 +97,12 @@ public class ObjectDetector {
         }
         imgData = ByteBuffer.allocateDirect(1 * inputSize * inputSize * 3 * numBytesPerChannel);
         imgData.order(ByteOrder.nativeOrder());
+
+
+        // store every pixel of frame
         intValues = new int[inputSize * inputSize];
 
+  		// create output content
         tfLite.setNumThreads(NUM_THREADS);
         outputLocations = new float[1][NUM_DETECTIONS][4];
         outputClasses = new float[1][NUM_DETECTIONS];
@@ -104,13 +111,16 @@ public class ObjectDetector {
 
         croppedFrame = Bitmap.createBitmap(cropSize, cropSize, Bitmap.Config.ARGB_8888);
 
+        // transform frames to required shape
         frameToCropTransform =
                 getTransformationMatrix(
                         previewSize.getWidth(), previewSize.getHeight(),
                         cropSize, cropSize);
         cropToFrameTransform = new Matrix();
+        // transform cropped frames to original shape
         frameToCropTransform.invert(cropToFrameTransform);
 
+        // create new thread for detection
         recognitionJobs = new LinkedList<Runnable>();
         recognitions = new LinkedList<Recognition>();
         new Thread(new Runnable() {
@@ -136,10 +146,12 @@ public class ObjectDetector {
 
     public void detect(Bitmap frame) {
 
+    	// crop frame and store pixels
         canvas = new Canvas(croppedFrame);
         canvas.drawBitmap(frame, frameToCropTransform, null);
         croppedFrame.getPixels(intValues, 0, croppedFrame.getWidth(), 0, 0, croppedFrame.getWidth(), croppedFrame.getHeight());
 
+        // add new detection job
         recognitionJobs.add(new Runnable() {
             @Override
             public void run() {
@@ -150,7 +162,9 @@ public class ObjectDetector {
     }
 
     public List<Recognition> recognizeImage() {
+
         imgData.rewind();
+        // load every byte of frame
         for (int i = 0; i < inputSize; ++i) {
             for (int j = 0; j < inputSize; ++j) {
                 int pixelValue = intValues[i * inputSize + j];
@@ -179,8 +193,10 @@ public class ObjectDetector {
         outputMap.put(2, outputScores);
         outputMap.put(3, numDetections);
 
+        // run detection
         tfLite.runForMultipleInputsOutputs(inputArray, outputMap);
 
+        // read recognition
         final ArrayList<Recognition> recognitions = new ArrayList<>(NUM_DETECTIONS);
         for (int i = 0; i < NUM_DETECTIONS; ++i) {
             final RectF detection =

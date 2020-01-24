@@ -126,6 +126,7 @@ public class CameraPreview extends TextureView {
         }
         @Override
         public void onSurfaceTextureUpdated(SurfaceTexture texture) {
+        	// detect frame
             Bitmap frame = getBitmap();
             objectDetector.detect(frame);
         }
